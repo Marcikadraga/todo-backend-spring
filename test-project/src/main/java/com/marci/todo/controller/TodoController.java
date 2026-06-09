@@ -41,4 +41,14 @@ public class TodoController {
     public void deleteTodo(@PathVariable Long id) {
         todoService.deleteById(id);
     }
+
+    @GetMapping("/completed")
+    public List<Todo> getCompletedTodos() {
+        return todoService.getCompletedTodos();
+    }
+    
+    @GetMapping("/pending")
+    public List<Todo> getPendingTodos() {
+        return todoService.getPendingTodos();
+    }
 }
