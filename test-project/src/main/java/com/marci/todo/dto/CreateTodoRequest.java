@@ -1,12 +1,11 @@
 package com.marci.todo.dto;
 
+import com.marci.todo.model.Priority;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import com.marci.todo.model.Priority;
 
 import java.time.LocalDate;
 
