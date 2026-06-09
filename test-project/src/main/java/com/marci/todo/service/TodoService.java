@@ -27,16 +27,18 @@ public class TodoService {
 
 
     
-    public void save(Todo todo) {
-        todo.setId(nextId);
+    public void save(CreateTodoRequest request) {
+        Todo todo = Todo.builder()
+                .id(nextId)
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .completed(false)
+                .createdAt(LocalDateTime.now())
+                .deadline(request.getDeadline())
+                .priority(request.getPriority() == null ? Priority.NORMAL : request.getPriority())
+                .build();
+    
         nextId++;
-    
-        todo.setCreatedAt(LocalDateTime.now());
-        todo.setCompleted(false);
-    
-        if (todo.getPriority() == null) {
-            todo.setPriority(Priority.NORMAL);
-        }
     
         todoRepository.save(todo);
     }
