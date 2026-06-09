@@ -43,7 +43,16 @@ public class TodoService {
         todoRepository.save(todo);
     }
 
-    public void update(Todo todo) {
+    public void update(Long id, UpdateTodoRequest request) {
+        Todo todo = Todo.builder()
+                .id(id)
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .completed(request.isCompleted())
+                .deadline(request.getDeadline())
+                .priority(request.getPriority())
+                .build();
+    
         todoRepository.update(todo);
     }
 
