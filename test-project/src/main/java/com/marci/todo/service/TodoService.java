@@ -1,5 +1,7 @@
 package com.marci.todo.service;
 
+import com.marci.todo.dto.CreateTodoRequest;
+import com.marci.todo.dto.UpdateTodoRequest;
 import com.marci.todo.model.Priority;
 import com.marci.todo.model.Todo;
 import com.marci.todo.repository.TodoRepository;
