@@ -3,6 +3,8 @@ package com.marci.todo.controller;
 import com.marci.todo.model.Todo;
 import com.marci.todo.service.TodoService;
 import org.springframework.web.bind.annotation.*;
+import com.marci.todo.dto.CreateTodoRequest;
+import com.marci.todo.dto.UpdateTodoRequest;
 
 import java.util.List;
 
@@ -27,8 +29,8 @@ public class TodoController {
     }
 
     @PostMapping
-    public void createTodo(@RequestBody Todo todo) {
-        todoService.save(todo);
+    public void createTodo(@RequestBody CreateTodoRequest request) {
+        todoService.save(request);
     }
 
     @PutMapping("/{id}")
