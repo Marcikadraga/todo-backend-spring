@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import com.marci.todo.dto.CreateTodoRequest;
 import com.marci.todo.dto.UpdateTodoRequest;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -29,21 +31,6 @@ public class TodoController {
         return todoService.getTodoById(id);
     }
 
-    @PostMapping
-    public void createTodo(@RequestBody CreateTodoRequest request) {
-        todoService.save(request);
-    }
-    
-    @PutMapping("/{id}")
-    public void updateTodo(@PathVariable Long id, @RequestBody UpdateTodoRequest request) {
-        todoService.update(id, request);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteTodo(@PathVariable Long id) {
-        todoService.deleteById(id);
-    }
-
     @GetMapping("/completed")
     public List<Todo> getCompletedTodos() {
         return todoService.getCompletedTodos();
@@ -52,5 +39,21 @@ public class TodoController {
     @GetMapping("/pending")
     public List<Todo> getPendingTodos() {
         return todoService.getPendingTodos();
+    }
+
+    @PostMapping
+    public void createTodo(@Valid @RequestBody CreateTodoRequest request) {
+        todoService.save(request);
+    }
+
+    @PutMapping("/{id}")
+    public void updateTodo(@PathVariable Long id, @Valid @RequestBody UpdateTodoRequest request) {
+        todoService.update(id, request);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public void deleteTodo(@PathVariable Long id) {
+        todoService.deleteById(id);
     }
 }
