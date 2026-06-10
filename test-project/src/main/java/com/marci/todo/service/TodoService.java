@@ -34,7 +34,7 @@ public class TodoService {
         return todo;
     }
 
-    public void createTodo(CreateTodoRequest request) {
+    public Todo createTodo(CreateTodoRequest request) {
         Todo todo = Todo.builder()
                 .id(nextId)
                 .title(request.getTitle())
@@ -48,9 +48,10 @@ public class TodoService {
         nextId++;
     
         todoRepository.save(todo);
+        return todo;
     }
 
-    public void updateTodo(Long id, UpdateTodoRequest request) {
+    public Todo update(Long id, UpdateTodoRequest request) {
         Todo existingTodo = todoRepository.findById(id);
     
         if (existingTodo == null) {
@@ -67,6 +68,8 @@ public class TodoService {
                 .build();
     
         todoRepository.update(todo);
+    
+        return todoRepository.findById(id);
     }
 
     public void deleteById(Long id) {

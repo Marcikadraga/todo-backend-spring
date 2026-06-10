@@ -5,6 +5,8 @@ import com.marci.todo.service.TodoService;
 import org.springframework.web.bind.annotation.*;
 import com.marci.todo.dto.CreateTodoRequest;
 import com.marci.todo.dto.UpdateTodoRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import jakarta.validation.Valid;
 
@@ -42,15 +44,16 @@ public class TodoController {
     }
 
     @PostMapping
-    public void createTodo(@Valid @RequestBody CreateTodoRequest request) {
-        todoService.createTodo(request);
+    public ResponseEntity<Todo> createTodo(@Valid @RequestBody CreateTodoRequest request) {
+        Todo createdTodo = todoService.createTodo(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTodo);
     }
 
     @PutMapping("/{id}")
-    public void updateTodo(@PathVariable Long id, @Valid @RequestBody UpdateTodoRequest request) {
-        todoService.updateTodo(id, request);
+    public ResponseEntity<Todo> updateTodo(@PathVariable Long id, @Valid @RequestBody UpdateTodoRequest request) {
+        Todo updatedTodo = todoService.update(id, request);
+        return ResponseEntity.ok(updatedTodo);
     }
-
 
     @DeleteMapping("/{id}")
     public void deleteTodo(@PathVariable Long id) {
