@@ -1,15 +1,23 @@
-[![Open in Codeanywhere](https://codeanywhere.com/img/open-in-codeanywhere-btn.svg)](https://app.codeanywhere.com/#https://github.com/Codeanywhere-Templates/spring-boot)
+# Todo App Backend
 
-This is a template project for Spring Boot applications in [Codeanywhere](https://codeanywhere.com/). [Try it out](https://app.codeanywhere.com/#https://github.com/Codeanywhere-Templates/spring-boot)
+A simple Todo application backend built with Java and Spring Boot.<br>
+The project provides REST API endpoints for managing todo items and is intended<br>
+as a practice project for learning backend development with Spring Boot.<br>
 
-### Running the project
+# Technologies
+* Java
+* Spring Boot
+* Maven
+* REST API
+* In-memory data storage
 
-Open the terminal and run:
-```sh
-cd test-project
-mvn spring-boot:run
-```
-Or just press the *Run Code* button found in the top right of the editor panel.
-### Want to contribute?
+# Features
+* Get all todos
+* Get todo by ID
+* Get completed todos
+* Get pending todos
+* Layered structure with Controller, Service, Repository and Model classes
+* Simple in-memory repository for practicing Spring Boot fundamentals
 
-Feel free to [open a PR](https://github.com/Codeanywhere-Templates/spring-boot) with any suggestions for this test project 😃 
+
+
