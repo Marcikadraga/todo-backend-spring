@@ -43,12 +43,12 @@ public class TodoController {
 
     @PostMapping
     public void createTodo(@Valid @RequestBody CreateTodoRequest request) {
-        todoService.save(request);
+        todoService.createTodo(request);
     }
 
     @PutMapping("/{id}")
     public void updateTodo(@PathVariable Long id, @Valid @RequestBody UpdateTodoRequest request) {
-        todoService.update(id, request);
+        todoService.updateTodo(id, request);
     }
 
 

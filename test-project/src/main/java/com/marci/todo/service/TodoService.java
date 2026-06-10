@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import com.marci.todo.exception.TodoNotFoundException;
 
 @Service
 public class TodoService {
@@ -24,12 +25,16 @@ public class TodoService {
     }
 
     public Todo getTodoById(Long id) {
-        return todoRepository.findById(id);
+        Todo todo = todoRepository.findById(id);
+    
+        if (todo == null) {
+            throw new TodoNotFoundException(id);
+        }
+    
+        return todo;
     }
 
-
-    
-    public void save(CreateTodoRequest request) {
+    public void createTodo(CreateTodoRequest request) {
         Todo todo = Todo.builder()
                 .id(nextId)
                 .title(request.getTitle())
@@ -45,20 +50,32 @@ public class TodoService {
         todoRepository.save(todo);
     }
 
-    public void update(Long id, UpdateTodoRequest request) {
+    public void updateTodo(Long id, UpdateTodoRequest request) {
+        Todo existingTodo = todoRepository.findById(id);
+    
+        if (existingTodo == null) {
+            throw new TodoNotFoundException(id);
+        }
+    
         Todo todo = Todo.builder()
                 .id(id)
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .completed(request.isCompleted())
                 .deadline(request.getDeadline())
-                .priority(request.getPriority())
+                .priority(request.getPriority() == null ? Priority.NORMAL : request.getPriority())
                 .build();
     
         todoRepository.update(todo);
     }
 
     public void deleteById(Long id) {
+        Todo todo = todoRepository.findById(id);
+    
+        if (todo == null) {
+            throw new TodoNotFoundException(id);
+        }
+    
         todoRepository.deleteById(id);
     }
 
