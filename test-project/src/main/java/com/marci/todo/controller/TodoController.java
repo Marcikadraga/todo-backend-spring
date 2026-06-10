@@ -25,6 +25,7 @@ public class TodoController {
 
     @GetMapping("/{id}")
     public Todo getTodoById(@PathVariable Long id) {
+        System.out.println("GET /api/todos/" + id);
         return todoService.getTodoById(id);
     }
 

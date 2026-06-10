@@ -15,8 +15,16 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class CreateTodoRequest {
+    @NotBlank(message = "Title is required")
+    @Size(max = 100, message = "Title cannot be longer than 100 characters")
     private String title;
+
+    @Size(max = 500, message = "Description cannot be longer than 500 characters")
     private String description;
+
+    @NotNull(message = "Deadline is required")
+    @FutureOrPresent(message = "Deadline cannot be in the past")
     private LocalDate deadline;
+
     private Priority priority;
 }
