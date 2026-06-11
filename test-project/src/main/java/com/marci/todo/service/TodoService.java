@@ -2,6 +2,7 @@ package com.marci.todo.service;
 
 import com.marci.todo.dto.CreateTodoRequest;
 import com.marci.todo.dto.UpdateTodoRequest;
+import com.marci.todo.exception.TodoNotFoundException;
 import com.marci.todo.model.Priority;
 import com.marci.todo.model.Todo;
 import com.marci.todo.repository.TodoRepository;
@@ -9,12 +10,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import com.marci.todo.exception.TodoNotFoundException;
 
 @Service
 public class TodoService {
+
     private final TodoRepository todoRepository;
-    private Long nextId = 4L;
 
     public TodoService(TodoRepository todoRepository) {
         this.todoRepository = todoRepository;
@@ -25,18 +25,12 @@ public class TodoService {
     }
 
     public Todo getTodoById(Long id) {
-        Todo todo = todoRepository.findById(id);
-    
-        if (todo == null) {
-            throw new TodoNotFoundException(id);
-        }
-    
-        return todo;
+        return todoRepository.findById(id)
+                .orElseThrow(() -> new TodoNotFoundException(id));
     }
 
     public Todo createTodo(CreateTodoRequest request) {
         Todo todo = Todo.builder()
-                .id(nextId)
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .completed(false)
@@ -44,49 +38,35 @@ public class TodoService {
                 .deadline(request.getDeadline())
                 .priority(request.getPriority() == null ? Priority.NORMAL : request.getPriority())
                 .build();
-    
-        nextId++;
-    
-        todoRepository.save(todo);
-        return todo;
+
+        return todoRepository.save(todo);
     }
 
     public Todo update(Long id, UpdateTodoRequest request) {
-        Todo existingTodo = todoRepository.findById(id);
-    
-        if (existingTodo == null) {
-            throw new TodoNotFoundException(id);
-        }
-    
-        Todo todo = Todo.builder()
-                .id(id)
-                .title(request.getTitle())
-                .description(request.getDescription())
-                .completed(request.isCompleted())
-                .deadline(request.getDeadline())
-                .priority(request.getPriority() == null ? Priority.NORMAL : request.getPriority())
-                .build();
-    
-        todoRepository.update(todo);
-    
-        return todoRepository.findById(id);
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new TodoNotFoundException(id));
+
+        todo.setTitle(request.getTitle());
+        todo.setDescription(request.getDescription());
+        todo.setCompleted(request.isCompleted());
+        todo.setDeadline(request.getDeadline());
+        todo.setPriority(request.getPriority() == null ? Priority.NORMAL : request.getPriority());
+
+        return todoRepository.save(todo);
     }
 
     public void deleteById(Long id) {
-        Todo todo = todoRepository.findById(id);
-    
-        if (todo == null) {
-            throw new TodoNotFoundException(id);
-        }
-    
-        todoRepository.deleteById(id);
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new TodoNotFoundException(id));
+
+        todoRepository.delete(todo);
     }
 
     public List<Todo> getCompletedTodos() {
-        return todoRepository.findCompleted();
+        return todoRepository.findByCompletedTrue();
     }
 
     public List<Todo> getPendingTodos() {
-        return todoRepository.findPending();
+        return todoRepository.findByCompletedFalse();
     }
 }

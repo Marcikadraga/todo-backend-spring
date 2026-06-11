@@ -7,6 +7,7 @@ import com.marci.todo.dto.CreateTodoRequest;
 import com.marci.todo.dto.UpdateTodoRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity;
 
 import jakarta.validation.Valid;
 
@@ -56,7 +57,8 @@ public class TodoController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTodo(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
         todoService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -1,14 +1,11 @@
 package com.marci.todo.repository;
 
 import com.marci.todo.model.Todo;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
 
-public interface TodoRepository {
-    List<Todo> findAll();
-    Todo findById(Long id);
-    void save(Todo todo);
-    void update(Todo todo);
-    void deleteById(Long id);
-    List<Todo> findCompleted();
-    List<Todo> findPending();
+public interface TodoRepository extends JpaRepository<Todo, Long> {
+    List<Todo> findByCompletedTrue();
+    List<Todo> findByCompletedFalse();
 }
