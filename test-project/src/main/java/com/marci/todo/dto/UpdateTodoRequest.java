@@ -19,7 +19,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class UpdateTodoRequest {
-
     @NotBlank(message = "Title is required")
     @Size(max = 100, message = "Title cannot be longer than 100 characters")
     private String title;
