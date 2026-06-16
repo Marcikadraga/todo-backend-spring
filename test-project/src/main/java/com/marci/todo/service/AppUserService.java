@@ -1,6 +1,7 @@
 package com.marci.todo.service;
 
 import com.marci.todo.dto.CreateAppUserRequest;
+import com.marci.todo.dto.UpdateAppUserRequest;
 import com.marci.todo.exception.AppUserNotFoundException;
 import com.marci.todo.model.AppUser;
 import com.marci.todo.model.AppUserRole;
@@ -50,7 +51,7 @@ public class AppUserService {
         return appUserRepository.save(appUser);
     }
 
-    public AppUser updateAppUser(Long id, CreateAppUserRequest request) {
+    public AppUser updateAppUser(Long id, UpdateAppUserRequest request) {
         AppUser appUser = appUserRepository.findById(id)
                 .orElseThrow(() -> new AppUserNotFoundException(id));
 
