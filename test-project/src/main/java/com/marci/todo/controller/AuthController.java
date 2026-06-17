@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.marci.todo.dto.LoginRequest;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -22,5 +24,16 @@ public class AuthController {
     public ResponseEntity<AppUser> register(@Valid @RequestBody RegisterRequest request) {
         AppUser registeredUser = authService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AppUser> login(@Valid @RequestBody LoginRequest request) {
+        try {
+            AppUser loggedInUser = authService.login(request);
+            return ResponseEntity.ok(loggedInUser);
+        } catch (Exception error) {
+            System.out.println(error.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 }

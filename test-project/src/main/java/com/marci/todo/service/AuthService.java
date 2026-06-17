@@ -1,5 +1,6 @@
 package com.marci.todo.service;
 
+import com.marci.todo.dto.LoginRequest;
 import com.marci.todo.dto.RegisterRequest;
 import com.marci.todo.model.AppUser;
 import com.marci.todo.model.AppUserRole;
@@ -33,5 +34,21 @@ public class AuthService {
                 .build();
 
         return appUserRepository.save(appUser);
+    }
+
+    public AppUser login(LoginRequest request) {
+        AppUser appUser = appUserRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+
+        boolean passwordMatches = passwordEncoder.matches(
+                request.getPassword(),
+                appUser.getPasswordHash()
+        );
+
+        if (!passwordMatches) {
+            throw new RuntimeException("Invalid email or password");
+        }
+
+        return appUser;
     }
 }
