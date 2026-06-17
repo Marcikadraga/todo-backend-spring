@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateAppUserRequest {
+public class RegisterRequest {
 
     @NotBlank(message = "Username is required")
     @Size(min = 3, max = 30, message = "Username must be between 3 and 30 characters")

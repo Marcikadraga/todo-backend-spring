@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,6 +29,10 @@ public class AppUser {
 
     @Column(nullable = false, length = 120, unique = true)
     private String email;
+
+    @JsonIgnore
+    @Column(nullable = false)
+    private String passwordHash;
 
     @Column(nullable = false)
     private boolean active;
