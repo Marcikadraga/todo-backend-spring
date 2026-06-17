@@ -1,11 +1,10 @@
 package com.marci.todo.controller;
 
-import com.marci.todo.dto.CreateAppUserRequest;
+
 import com.marci.todo.dto.UpdateAppUserRequest;
 import com.marci.todo.model.AppUser;
 import com.marci.todo.service.AppUserService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,12 +38,6 @@ public class AppUserController {
     @GetMapping("/inactive")
     public List<AppUser> getInactiveAppUsers() {
         return appUserService.getInactiveAppUsers();
-    }
-
-    @PostMapping
-    public ResponseEntity<AppUser> createAppUser(@Valid @RequestBody CreateAppUserRequest request) {
-        AppUser createdAppUser = appUserService.createAppUser(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdAppUser);
     }
 
     @PutMapping("/{id}")
